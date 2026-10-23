@@ -1,128 +1,283 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Riddle Relay Brain Games</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riddle Relay — Expert Lab</title>
 <style>
-:root{--bg:#050B14;--fg:#F2F7FB;--mut:#8FA6BD;--line:#2B3B55;--c1:#22D3EE;--c2:#7CFF3A;--c3:#F2B33D;--c4:#FF5C8A;--card:#0B1626;--on:#050B14;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#F4F8FB;--fg:#0B1626;--mut:#4A6580;--line:#C5D3E0;--c1:#0A7F92;--c2:#2A7A10;--c3:#A86B00;--c4:#B82A59;--card:#FFFFFF;--on:#FFFFFF}}
-:root[data-theme="light"]{--bg:#F4F8FB;--fg:#0B1626;--mut:#4A6580;--line:#C5D3E0;--c1:#0A7F92;--c2:#2A7A10;--c3:#A86B00;--c4:#B82A59;--card:#FFFFFF;--on:#FFFFFF}
-html,body{margin:0;background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',monospace}
-#app{max-width:480px;margin:0 auto;padding:20px 16px 40px}
-h1,h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;margin:0}
-h1{font-size:34px;line-height:1}
-h1 span{color:var(--c1)}
-p{color:var(--mut);line-height:1.5;font-size:14px}
-button,input{font:inherit;color:var(--fg)}
-.btn{display:block;width:100%;min-height:48px;margin:10px 0;padding:12px 14px;text-align:left;background:var(--card);border:2px solid var(--c1);border-radius:14px;cursor:pointer}
-.btn b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:20px}
-.btn small{color:var(--mut)}
-.pri{background:var(--c1);color:var(--on);text-align:center;font-weight:500}
-input{width:100%;box-sizing:border-box;min-height:48px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px;font-size:18px}
-.grid{display:grid;gap:8px;margin:16px 0}
-.cell{aspect-ratio:1;border:2px solid var(--c1);border-radius:12px;background:var(--card);font-size:28px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.cell.on{background:var(--c2);color:var(--on);border-color:var(--c2)}
-.cell.blank{visibility:hidden}
-.pad{aspect-ratio:1;border:0;border-radius:16px;opacity:.4;cursor:pointer}
-.pad.f{opacity:1;box-shadow:0 0 28px currentColor}
-.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.lnk{background:none;border:0;color:var(--c1);cursor:pointer;text-decoration:underline;min-height:44px}
-.hist{margin:10px 0;padding:0;list-style:none}
-.hist li{padding:6px 0;border-bottom:1px solid var(--line)}
-.ok{border:2px solid var(--c2);border-radius:18px;padding:22px;text-align:center}
-.ok h2{font-size:48px;color:var(--c2)}
-.ok div{margin:8px 0;font-size:18px}
-.st{min-height:24px;color:var(--c3);margin:6px 0}
-</style>
-</head>
-<body>
-<div id="app"></div>
+:root{--bg:#07111f;--card:#101f32;--ink:#edf5ff;--muted:#9ab0c9;--cyan:#39d9f2;--lime:#b7ff5b;--pink:#ff658a;--gold:#ffc857;--line:#29405b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#142844,var(--bg) 65%);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}main{max-width:760px;margin:auto;padding:22px 16px 60px}h1,h2,h3{line-height:1.1;margin:0 0 10px}h1{font-size:clamp(32px,7vw,54px);letter-spacing:-1.5px}h1 span{color:var(--cyan)}p{color:var(--muted)}.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.tag{border:1px solid var(--line);padding:5px 10px;border-radius:99px;color:var(--lime);font-size:12px;letter-spacing:.08em;text-transform:uppercase}.card{background:linear-gradient(145deg,#12243a,#0c1929);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 10px 35px #0002}.btn{border:1px solid var(--cyan);background:#102b40;color:var(--ink);padding:12px 15px;border-radius:11px;font-weight:700;cursor:pointer;min-height:46px}.btn.primary{background:var(--cyan);color:#06121d}.btn:disabled{opacity:.4;cursor:not-allowed}input{width:100%;padding:13px;border-radius:10px;background:#071321;border:1px solid var(--line);color:var(--ink);font-size:18px}label{display:block;color:var(--muted);font-size:13px;margin:10px 0 6px}.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.game{padding:17px;border-radius:15px;border:1px solid var(--line);background:var(--card);cursor:pointer;text-align:left;color:var(--ink);min-height:135px}.game:hover{border-color:var(--cyan);transform:translateY(-1px)}.game b{display:block;font-size:19px;margin:6px 0}.game small{color:var(--muted)}.stats{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#071321;border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:13px}.stat b{color:var(--lime)}.grid{display:grid;gap:6px;max-width:430px;margin:18px auto}.tile{aspect-ratio:1;border-radius:9px;border:1px solid #36516f;background:#172d45;color:var(--ink);font-size:clamp(15px,4vw,23px);font-weight:800;cursor:pointer}.tile.on{background:var(--lime);color:#06121d;border-color:var(--lime)}.tile.wall{background:#030811;border-color:#030811;cursor:not-allowed}.tile.player{background:var(--cyan);color:#05121a}.tile.goal{border:2px dashed var(--gold)}.tile.path{outline:2px solid var(--pink)}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.feedback{min-height:26px;color:var(--gold);margin:10px 0}.clues{display:grid;gap:7px;margin:14px 0}.clue{background:#071321;border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-family:ui-monospace,monospace}.padgrid{display:grid;grid-template-columns:repeat(2,minmax(90px,1fr));gap:10px;max-width:340px;margin:20px auto}.pad{aspect-ratio:1;border:0;border-radius:18px;opacity:.75;cursor:pointer;transition:filter .1s,transform .1s}.pad:active{transform:scale(.97)}.pad.flash{opacity:1;filter:brightness(1.8);box-shadow:0 0 30px currentColor}.hidden{display:none!important}.success{border:1px solid var(--lime);color:var(--lime);padding:13px;border-radius:12px;margin-top:12px}.subtle{font-size:13px;color:var(--muted)}.foot{font-size:12px;color:var(--muted);margin-top:24px}.sequence{font-size:24px;letter-spacing:5px;text-align:center;padding:18px;background:#071321;border-radius:12px}.btnbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+</style></head>
+<body><main>
+<div class="top"><div class="tag">Riddle Relay · Expert Lab</div><button class="btn" id="homeBtn">Home</button></div>
+<section id="home">
+<h1>Think fast.<br><span>Prove it.</span></h1>
+<p>Expert games with randomized boards, codes, sequences and timed attention challenges. Every run is different. Complete the challenge on this device and show the solved screen to the marshal.</p>
+<div class="card"><label for="team">Team number</label><input id="team" inputmode="numeric" maxlength="4" placeholder="Enter team number"><p class="subtle">Your team number is shown on the completion screen. Challenges are generated when you start.</p></div>
+<div class="games">
+<button class="game" data-game="vault"><span class="tag">Logic · 5–8 min</span><b>01 / Adaptive Vault</b><small>Crack a fresh 5-digit code using exact and misplaced feedback. Limited attempts.</small></button>
+<button class="game" data-game="lights"><span class="tag">Spatial · 4–7 min</span><b>02 / Lights Out: 5×5</b><small>Turn all 25 lights off. Each move toggles a cross-shaped pattern.</small></button>
+
+<button class="game" data-game="echo"><span class="tag">Working memory · 3–6 min</span><b>04 / Signal Echo</b><small>Repeat a generated sequence that grows to ten signals using six colors. One mistake resets the run.</small></button>
+<button class="game" data-game="stroop"><span class="tag">Attention · 3–5 min</span><b>03 / Color Conflict</b><small>Read the word, ignore its ink color, and choose the matching color tile.</small></button>
+<button class="game" data-game="minefield"><span class="tag">Visual memory · 3–5 min</span><b>05 / Minefield Memory</b><small>Memorize the safe tiles, then cross the grid without stepping on a mine.</small></button>
+<button class="game" data-game="reactor"><span class="tag">Reflexes · 2–4 min</span><b>06 / Reactor Rush</b><small>Follow a changing rule and hit only the correct symbols before time runs out.</small></button>
+<button class="game" data-game="sequencehunt"><span class="tag">Speed · 2–4 min</span><b>07 / Sequence Hunt</b><small>Race through a shuffled number grid: tap numbers from 1 to 20 in order before time runs out.</small></button>
+<button class="game" data-game="numberblitz"><span class="tag">Mental agility · 2–4 min</span><b>08 / Number Blitz</b><small>Solve 20 harder arithmetic questions. Each question has its own 3.5-second countdown; no overall timer.</small></button>
+<button class="game" data-game="primepursuit"><span class="tag">Logic · 2–3 min</span><b>09 / Prime Pursuit</b><small>Find 10 prime numbers hidden among 16 tiles before the 15-second timer expires. Three wrong picks end the run.</small></button>
+<button class="game" data-game="minisudoku"><span class="tag">Deduction · untimed</span><b>10 / Sudoku: Lockdown</b><small>A difficult 6×6 Sudoku with 22 missing cells. Fill each row, column and 2×3 box with digits 1–6. No countdown.</small></button>
+<button class="game" data-game="equationforge"><span class="tag">Mental agility · expert</span><b>11 / Equation Forge</b><small>Crack 15 harder equations using larger numbers. Just 2.8 seconds per question; three errors or timeouts end the run.</small></button>
+<button class="game" data-game="constraintgrid"><span class="tag">Deduction · expert</span><b>12 / Constraint Grid</b><small>Complete six 5×5 number grids. Every row and column must contain 1–5 exactly once. Each grid is checked for exactly one valid solution before it appears.</small></button>
+<button class="game" data-game="dualityprotocol"><span class="tag">Working memory · extreme</span><b>15 / Duality Protocol</b><small>Track a changing rule across a stream of symbols. The same symbol can demand opposite actions when the rule flips.</small></button>
+
+</div><p class="foot">For in-person use: have the marshal verify the completion screen. This prototype runs locally; it does not send scores to a server.</p>
+</section>
+<section id="play" class="hidden"><div class="card"><div class="top"><div><div class="tag" id="modeTag">EXPERT CHALLENGE</div><h2 id="gameTitle">Game</h2></div><div class="stat" id="elapsedStat">Time <b id="time">0:00</b></div></div><p id="instructions"></p><div class="stats"><div class="stat">Team <b id="teamDisplay">—</b></div><div class="stat">Attempts <b id="attempts">0</b></div><div class="stat">Level <b id="level">EXPERT</b></div></div><div id="board"></div><div class="feedback" id="feedback" aria-live="polite"></div><div id="win" class="success hidden"></div><div class="btnbar"><button class="btn primary" id="retry">↻ Retry this game</button><button class="btn" id="back">Back to games</button></div></div></section>
+</main>
 <script>
-const app=document.getElementById('app');
-let team='',t0=0,cur='';
-try{team=sessionStorage.getItem('team')||''}catch(e){}
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const rnd=n=>Math.random()*n|0;
-const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
-const G={
- slide:['Slide Eight','Slide the tiles into order 1 to 8.'],
- lights:['Lights Out','Switch every light off. A tap flips the tile and its neighbours.'],
- code:['Code Breaker','Find the secret 4-digit code. All digits differ.'],
- memory:['Memory Pairs','Match all 8 pairs.'],
- echo:['Echo','Repeat the flashing pattern. Reach 7 steps.']
-};
-function home(){
- cur='';
- app.innerHTML='<h1>Riddle<br>Relay <span>2.0</span></h1><p>Brain games. Enter your team number, pick the game you were given, solve it, and show the SOLVED screen to the marshal.</p><label for="tn">Team number</label><input id="tn" inputmode="numeric" maxlength="3" value="'+esc(team)+'">'+Object.keys(G).map(k=>'<button class="btn" data-g="'+k+'"><b>'+G[k][0]+'</b><small>'+G[k][1]+'</small></button>').join('');
- app.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>begin(b.dataset.g));
+(()=>{'use strict';
+const $=id=>document.getElementById(id);let current='',team='',started=0,timer=null,attempts=0,state={};
+const rand=n=>Math.floor(Math.random()*n),shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){let j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a},choose=a=>a[rand(a.length)];
+function setGame(g){team=$('team').value.trim();if(!/^\d{1,4}$/.test(team)){ $('team').focus();return;}clearInterval(state.mathClock);clearInterval(state.questionClock);clearInterval(state.psClock);clearInterval(state.huntTick);clearInterval(state.primeTick);clearInterval(state.sudokuTick);clearInterval(state.equationClock);clearInterval(state.gridClock);clearTimeout(state.timeout);clearTimeout(state.equationTimeout);clearTimeout(state.dualityTimeout);clearTimeout(state.cipherNext);clearTimeout(state.timeout);current=g;started=Date.now();attempts=0;state={};$('elapsedStat').classList.toggle('hidden',g==='minisudoku');$('home').classList.add('hidden');$('play').classList.remove('hidden');$('teamDisplay').textContent=team;$('attempts').textContent='0';$('time').textContent='0:00';$('win').classList.add('hidden');$('feedback').textContent='';clearInterval(timer);timer=setInterval(()=>{let s=Math.floor((Date.now()-started)/1000);$('time').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')},1000);const launchers={vault,lights,echo,stroop,minefield,reactor,sequencehunt,numberblitz,primepursuit,minisudoku,equationforge,constraintgrid,dualityprotocol};if(typeof launchers[g]!=='function'){$('feedback').textContent='This game could not start. Please return to games and retry.';console.error('Missing game launcher:',g);return;}launchers[g]();}
+function countAttempt(){attempts++;$('attempts').textContent=attempts}
+function solved(detail){clearInterval(timer);$('win').classList.remove('hidden');$('win').innerHTML='<b>✓ CHALLENGE SOLVED</b><br>Team '+team+' · '+$('time').textContent+' · '+attempts+' recorded actions<br><span class="subtle">'+detail+'</span><br><br><b>Show this screen to the marshal.</b>';$('feedback').textContent='';$('board').querySelectorAll('button,input').forEach(x=>x.disabled=true)}
+function setup(title,instructions,tag){$('gameTitle').textContent=title;$('instructions').textContent=instructions;$('modeTag').textContent=tag;$('board').innerHTML='';$('feedback').textContent='';$('win').classList.add('hidden')}
+function vault(){setup('Adaptive Vault','Guess the secret 5-digit code. Digits are distinct. “Exact” means correct digit and position; “misplaced” means in the code but in another position. You have 8 guesses.','LOGIC · EXPERT');state.secret=shuffle('0123456789'.split('')).slice(0,5).join('');state.history=[];const b=$('board');b.innerHTML='<div class="card"><div class="subtle">CLUE LOG</div><div id="clues" class="clues"><div class="clue">No attempts yet.</div></div><label for="guess">5 different digits</label><input id="guess" inputmode="numeric" maxlength="5" placeholder="e.g. 50724"><div class="btnbar"><button class="btn primary" id="submit">Submit guess</button></div><p class="subtle">Digits do not repeat. The code changes whenever a new challenge starts.</p></div>';const submit=()=>{let g=$('guess').value.trim();if(!/^\d{5}$/.test(g)||new Set(g).size!==5){$('feedback').textContent='Enter exactly five distinct digits.';return}countAttempt();let exact=0,mis=0;for(let i=0;i<5;i++)if(g[i]===state.secret[i])exact++;else if(state.secret.includes(g[i]))mis++;state.history.unshift({g,exact,mis});$('clues').innerHTML=state.history.map(x=>'<div class="clue">'+x.g+' → '+x.exact+' exact · '+x.mis+' misplaced</div>').join('');$('guess').value='';if(exact===5){solved('Code accepted.');return}if(state.history.length>=8){$('feedback').textContent='Attempt limit reached. Start a new randomized challenge.';$('board').querySelectorAll('button,input').forEach(x=>x.disabled=true);return}$('feedback').textContent='Not yet. Use the feedback to narrow the code.'};$('submit').onclick=submit;$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')submit()})}
+function lights(){setup('Lights Out: 5×5','Tap a tile to toggle it and its orthogonal neighbours. Turn all 25 lights off. The board is generated by legal moves, so it is always solvable.','SPATIAL · EXTREME');let N=5,L=Array(25).fill(0);function flip(a,i){let r=Math.floor(i/N),c=i%N;[[0,0],[1,0],[-1,0],[0,1],[0,-1]].forEach(([dr,dc])=>{let R=r+dr,C=c+dc;if(R>=0&&R<N&&C>=0&&C<N)a[R*N+C]^=1})}for(let k=0;k<28;k++)flip(L,rand(25));state.L=L;state.moves=0;draw();function draw(){$('board').innerHTML='<div class="grid" style="grid-template-columns:repeat(5,minmax(0,1fr));width:min(100%,390px);margin:auto;gap:6px">'+L.map((v,i)=>'<button class="tile '+(v?'on':'')+'" data-i="'+i+'" style="aspect-ratio:1;min-width:0;padding:0">'+(v?'●':'○')+'</button>').join('')+'</div><p class="subtle" style="text-align:center">Moves: '+state.moves+' · Lights remaining: '+L.reduce((a,b)=>a+b,0)+'</p>';$('board').querySelectorAll('[data-i]').forEach(x=>x.onclick=()=>{flip(L,+x.dataset.i);state.moves++;countAttempt();if(L.every(v=>v===0)){draw();solved(state.moves+' tile taps.');return}draw()})}}
+
+function echo(){setup('Signal Echo: Spectrum','Watch the sequence of six colors, then repeat it in order. Each round adds a signal. Reach ten rounds. One mistake resets the sequence.','MEMORY · EXPERT');state.seq=[];state.pos=0;state.round=0;state.busy=true;const colors=['#22d3ee','#b7ff5b','#ffc857','#ff658a','#a78bfa','#fb923c'];$('board').innerHTML='<div class="padgrid" style="grid-template-columns:repeat(3,minmax(80px,1fr))">'+colors.map((c,i)=>'<button class="pad" data-i="'+i+'" style="background:'+c+';color:'+c+'" aria-label="Signal '+(i+1)+'"></button>').join('')+'</div><div class="sequence" id="seqmsg">Ready?</div>';const pads=[...$('board').querySelectorAll('.pad')];function flash(i){pads[i].classList.add('flash');setTimeout(()=>pads[i].classList.remove('flash'),170)}function next(){state.round++;state.seq.push(rand(6));state.pos=0;state.busy=true;$('seqmsg').textContent='Watch round '+state.round+' of 10';state.seq.forEach((x,i)=>setTimeout(()=>flash(x),350+i*286));setTimeout(()=>{state.busy=false;$('seqmsg').textContent='Your turn · '+state.seq.length+' signals'},350+state.seq.length*286)}pads.forEach((p,i)=>p.onclick=()=>{if(state.busy)return;flash(i);countAttempt();if(i!==state.seq[state.pos]){state.busy=true;state.seq=[];state.round=0;$('feedback').textContent='Mismatch. Sequence reset—watch carefully.';setTimeout(next,850);return}state.pos++;if(state.pos===state.seq.length){if(state.round===10){solved('Ten rounds completed across six colors.');return}state.busy=true;setTimeout(next,500)}});setTimeout(next,500)}
+function stroop(){setup('Color Conflict','Choose the WORD you read, not the ink color used to display it. Tap the matching color tile; the options are color-coded with no written labels. Complete 18 rounds with no more than 3 errors.','ATTENTION · EXPERT');const colors=[['RED','#ff5252'],['BLUE','#39a9ff'],['GREEN','#55e66b'],['YELLOW','#ffd447'],['PURPLE','#b38aff'],['ORANGE','#ff963b']];state.round=0;state.errors=0;$('board').innerHTML='<div class="card"><div class="sequence" id="stroopWord">READY</div><p class="subtle" id="stroopCount">Round 0 / 18 · Errors 0 / 3</p><p class="sequence" id="stroopTimer" style="font-size:20px">1.7s</p><div class="games" id="stroopBtns" style="grid-template-columns:repeat(3,minmax(70px,1fr))">'+colors.map((c,i)=>'<button class="btn" data-c="'+i+'" aria-label="Choose '+c[0]+'" title="Color option" style="min-height:64px;background:'+c[1]+';border:3px solid #ffffff55;color:transparent;font-size:0">&nbsp;</button>').join('')+'</div><p class="subtle">Select the color represented by the WORD, not the color of its letters.</p></div>';function next(){if(state.round>=18){solved('18 rounds · '+state.errors+' errors.');return}state.round++;state.correct=rand(6);let ink=rand(5);if(ink>=state.correct)ink++;$('stroopWord').textContent=colors[state.correct][0];$('stroopWord').style.color=colors[ink][1];$('stroopCount').textContent='Round '+state.round+' / 18 · Errors '+state.errors+' / 3';state.active=true;state.stroopDeadline=Date.now()+1700;let tick=setInterval(()=>{if(!state.active){clearInterval(tick);return}let rem=Math.max(0,state.stroopDeadline-Date.now());$('stroopTimer').textContent=(rem/1000).toFixed(1)+'s';if(rem<=0)clearInterval(tick)},30);state.timeout=setTimeout(()=>{if(!state.active)return;state.active=false;state.errors++;countAttempt();if(state.errors>3){$('feedback').textContent='Too many errors/timeouts. Return to menu for a fresh run.';$('board').querySelectorAll('button').forEach(x=>x.disabled=true);return}$('feedback').textContent='Too slow. One error added.';setTimeout(next,250)},1700)}$('board').querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{if(!state.active)return;state.active=false;clearTimeout(state.timeout);countAttempt();if(+b.dataset.c!==state.correct){state.errors++;$('feedback').textContent='Wrong choice. Read the word and ignore its ink color.'}else $('feedback').textContent='Correct.';if(state.errors>3){$('feedback').textContent='Too many errors. Return to menu.';$('board').querySelectorAll('button').forEach(x=>x.disabled=true);return}setTimeout(next,200)});next()}
+
+function minefield(){
+ setup('Minefield Memory','Memorize the green safe tiles for 3 seconds. Then they disappear: tap all safe tiles without choosing a mine. One wrong tile ends the run.','VISUAL MEMORY · EXPERT');
+ const total=25, safeCount=8, safe=new Set();
+ while(safe.size<safeCount)safe.add(rand(total));
+ state.safe=safe;state.found=new Set();state.phase='memorize';
+ function draw(show){
+  $('board').innerHTML='<div class="grid" style="grid-template-columns:repeat(5,minmax(42px,1fr));max-width:390px">'+Array.from({length:total},(_,i)=>{
+   let on=show&&safe.has(i),found=state.found.has(i);
+   return '<button class="tile '+(on?'on':'')+'" data-i="'+i+'" style="min-height:54px;font-size:20px">'+(show?(on?'✓':'·'):(found?'✓':'?'))+'</button>'
+  }).join('')+'</div><p class="subtle" style="text-align:center" id="mineMsg">'+(show?'Memorize the green safe tiles…':'Find all 8 safe tiles · Found '+state.found.size+' / '+safeCount)+'</p>';
+  $('board').querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{
+   if(state.phase!=='play')return;let i=+b.dataset.i;countAttempt();
+   if(!safe.has(i)){$('feedback').textContent='Mine hit! Remember the positions more carefully.';$('board').querySelectorAll('button').forEach(x=>x.disabled=true);return}
+   state.found.add(i);if(state.found.size===safeCount){draw(false);solved('All 8 safe tiles found.');return}draw(false)
+  })
+ }
+ draw(true);setTimeout(()=>{state.phase='play';draw(false);$('feedback').textContent='Go! Tap the safe tiles.'},3000)
 }
-function begin(g){
- const v=document.getElementById('tn')?document.getElementById('tn').value.trim():team;
- if(!/^\d{1,3}$/.test(v)){document.getElementById('tn').focus();return}
- team=v;try{sessionStorage.setItem('team',v)}catch(e){}
- cur=g;t0=Date.now();
- app.innerHTML='<div class="bar"><h2>'+G[g][0]+'</h2><button class="lnk" id="bk">menu</button></div><p>'+G[g][1]+'</p><div id="box"></div>';
- document.getElementById('bk').onclick=home;
- window[g](document.getElementById('box'));
+function reactor(){
+ setup('Reactor Rush','15 rapid rounds. Follow the instruction shown above the symbols: TAP the target or AVOID the target. Each round has a short timer.','REFLEXES · EXPERT');
+ const symbols=['◆','●','▲','■','★','✚'];state.round=0;state.errors=0;state.active=false;
+ $('board').innerHTML='<div class="card"><div class="sequence" id="reactRule">READY</div><p class="subtle" id="reactCount">Round 0 / 12 · Errors 0</p><div class="games" id="reactBtns"></div></div>';
+ function next(){
+  if(state.round>=15){solved('15 reactor rounds · '+state.errors+' errors.');return}
+  state.round++;state.active=true;state.target=rand(6);state.rule=rand(2);let opts=[];
+  opts.push(state.target);while(opts.length<4){let n=rand(6);if(!opts.includes(n))opts.push(n)}opts=shuffle(opts);
+  state.correct=state.target;
+  $('reactRule').textContent=state.round%2===1?'TAP '+symbols[state.target]:'AVOID '+symbols[state.target];
+  $('reactCount').textContent='Round '+state.round+' / 15 · Errors '+state.errors;
+  $('reactBtns').innerHTML=opts.map((x,i)=>'<button class="tile" data-s="'+x+'" style="min-height:76px;font-size:30px">'+symbols[x]+'</button>').join('');
+  state.timeout=setTimeout(()=>answer(null),1600);
+  $('reactBtns').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>answer(+b.dataset.s));
+ }
+ function answer(pick){
+  if(!state.active)return;state.active=false;clearTimeout(state.timeout);countAttempt();
+  // Alternating rule: select the target symbol on odd rounds; avoid it on even rounds.
+  let shouldHit=state.round%2===1;let ok=pick!==null&&(shouldHit?pick===state.target:pick!==state.target);
+  if(!ok)state.errors++;
+  if(state.errors>=4){$('feedback').textContent='Reactor overloaded—four errors. Return to games and try again.';$('board').querySelectorAll('button').forEach(x=>x.disabled=true);return}
+  $('feedback').textContent=ok?'Good reflexes.':'Missed the rule or ran out of time.';
+  setTimeout(next,260)
+ }
+ // Clear, consistent rule: odd rounds hit the target; even rounds avoid it.
+ next();
 }
-function win(info){
- const d=new Date(),s=Math.round((Date.now()-t0)/1000);
- app.innerHTML='<div class="ok"><h2>SOLVED</h2><div>'+esc(G[cur][0])+'</div><div>Team '+esc(team)+'</div><div>'+d.toLocaleTimeString()+'</div><div>'+s+' seconds, '+esc(info)+'</div></div><p>Show this screen to the marshal. A screenshot is not accepted.</p><button class="btn pri" id="hm">Back to menu</button>';
- document.getElementById('hm').onclick=home;
+
+
+function sequencehunt(){
+ setup('Sequence Hunt','Tap the shuffled tiles in ascending order from 1 to 20. Wrong taps cost time. Finish before the 20-second countdown reaches zero.','SPEED · EXPERT');
+ state.nextNum=1;state.deadline=Date.now()+20000;state.active=true;
+ $('board').innerHTML='<div class="card"><div class="sequence" id="huntTimer">20.0s</div><p class="subtle" id="huntCount">Find number 1 of 20</p><div class="grid" id="huntGrid" style="grid-template-columns:repeat(4,1fr);max-width:400px"></div></div>';
+ const nums=shuffle(Array.from({length:20},(_,i)=>i+1));
+ function draw(){ $('huntGrid').innerHTML=nums.map(n=>'<button class="tile" data-n="'+n+'" style="aspect-ratio:1">'+(n<state.nextNum?'✓':n)+'</button>').join('');$('huntGrid').querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{if(!state.active)return;let n=+b.dataset.n;countAttempt();if(n===state.nextNum){state.nextNum++;$('feedback').textContent='Correct!';if(state.nextNum===21){state.active=false;clearInterval(state.huntTick);solved('All 20 numbers found in '+$('time').textContent+'.');return}draw()}else{$('feedback').textContent='Wrong tile! 2 seconds deducted.';state.deadline-=2000} });}
+ draw();state.huntTick=setInterval(()=>{let left=Math.max(0,state.deadline-Date.now());$('huntTimer').textContent=(left/1000).toFixed(1)+'s';$('huntCount').textContent='Find number '+Math.min(state.nextNum,20)+' of 20';if(left<=0){state.active=false;clearInterval(state.huntTick);$('feedback').textContent='Time is up! Sequence Hunt failed.';$('huntGrid').querySelectorAll('button').forEach(b=>b.disabled=true)}},100);
 }
-function nbr(i){const r=i/3|0,c=i%3,o=[];if(r>0)o.push(i-3);if(r<2)o.push(i+3);if(c>0)o.push(i-1);if(c<2)o.push(i+1);return o}
-function slide(box){
- let b=[1,2,3,4,5,6,7,8,0],mv=0,last=-1;
- do{for(let i=0;i<100;i++){const z=b.indexOf(0),n=nbr(z).filter(x=>x!==last),k=n[rnd(n.length)];b[z]=b[k];b[k]=0;last=z}}while(b.join()==='1,2,3,4,5,6,7,8,0');
- const draw=()=>{box.innerHTML='<div class="grid" style="grid-template-columns:repeat(3,1fr)">'+b.map((v,i)=>'<button class="cell'+(v?'':' blank')+'" data-i="'+i+'">'+v+'</button>').join('')+'</div><p>Moves: '+mv+'</p>';
-  box.querySelectorAll('.cell').forEach(c=>c.onclick=()=>{const i=+c.dataset.i,z=b.indexOf(0);if(nbr(z).includes(i)){b[z]=b[i];b[i]=0;mv++;if(b.join()==='1,2,3,4,5,6,7,8,0')win(mv+' moves');else draw()}})};
+function numberblitz(){
+ setup('Number Blitz','Solve 20 arithmetic questions. Each question has its own 3.5-second countdown. There is no overall timer. Choose the correct answer from four options; 3 mistakes end the run.','MENTAL AGILITY · EXPERT');
+ state.round=0;state.errors=0;state.active=false;
+ $('board').innerHTML='<div class="card"><div class="sequence" id="mathQ">Ready?</div><p class="subtle" id="mathCount">Round 0 / 20 · Errors 0 / 3</p><div class="sequence" id="mathTimer" style="font-size:20px;margin:10px 0">3.5s</div><div class="games" id="mathOptions"></div></div>';
+ function next(){
+  if(state.round>=20){clearTimeout(state.timeout);solved('20 arithmetic rounds · '+state.errors+' mistakes.');return}
+  state.round++;let a,b,op=rand(4);
+  if(op===0){a=rand(30)+12;b=rand(29)+2;state.answer=a+b;state.question=a+' + '+b}
+  else if(op===1){a=rand(40)+20;b=rand(a-1)+1;state.answer=a-b;state.question=a+' − '+b}
+  else if(op===2){a=rand(12)+2;b=rand(12)+2;state.answer=a*b;state.question=a+' × '+b}
+  else {b=rand(10)+2;state.answer=b*(rand(12)+2);state.question=state.answer+' ÷ '+b;state.answer=state.answer/b}
+  let opts=new Set([state.answer]);while(opts.size<4){let v=state.answer+choose([-1,1,-2,2,-5,5,-10,10]);if(v>=0)opts.add(v)}
+  $('mathQ').textContent=state.question+' = ?';$('mathCount').textContent='Question '+state.round+' / 20 · Errors '+state.errors+' / 3';
+  $('mathOptions').innerHTML=shuffle([...opts]).map(v=>'<button class="btn" data-answer="'+v+'">'+v+'</button>').join('');
+  state.active=true;state.questionDeadline=Date.now()+3500;
+  const timerEl=$('mathTimer');timerEl.textContent='3.5s';
+  clearInterval(state.questionClock);state.questionClock=setInterval(()=>{if(!state.active)return;let left=Math.max(0,state.questionDeadline-Date.now());timerEl.textContent=(left/1000).toFixed(1)+'s';if(left<=0){clearInterval(state.questionClock);answer(null)}},50);
+  state.timeout=setTimeout(()=>answer(null),3500);
+  $('mathOptions').querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>answer(+b.dataset.answer))
+ }
+ function answer(v){
+  if(!state.active)return;state.active=false;clearTimeout(state.timeout);clearInterval(state.questionClock);countAttempt();
+  if(v!==state.answer)state.errors++;
+  if(state.errors>=3){$('feedback').textContent='Three mistakes or timeouts—Number Blitz ended.';$('board').querySelectorAll('button').forEach(x=>x.disabled=true);return}
+  $('feedback').textContent=v===state.answer?'Correct!':'Time / answer missed. The answer was '+state.answer+'.';
+  setTimeout(next,350)
+ }
+ next()
+}
+function primepursuit(){
+ setup('Prime Pursuit','Tap every prime number in the grid. You have 20 seconds. Selecting a composite number counts as an error; three errors end the run.','LOGIC · EXPERT');
+ const isPrime=n=>{if(n<2)return false;for(let d=2;d*d<=n;d++)if(n%d===0)return false;return true};
+ let primes=[],composites=[];for(let n=2;n<=50;n++)(isPrime(n)?primes:composites).push(n);
+ const chosenPrimes=shuffle(primes).slice(0,10),chosenComposites=shuffle(composites).slice(0,6);
+ state.tiles=shuffle([...chosenPrimes,...chosenComposites]);state.found=new Set();state.errors=0;state.active=true;state.deadline=Date.now()+15000;
+ $('board').innerHTML='<div class="card"><div class="sequence" id="primeTimer">15.0s</div><p class="subtle" id="primeCount">Find 10 prime numbers · Found 0 / 10 · Errors 0 / 3</p><div class="games" id="primeGrid" style="grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:430px;margin:auto"></div></div>';
+ $('primeGrid').innerHTML=state.tiles.map((n,i)=>'<button class="btn" data-prime="'+i+'" style="font-size:22px;min-height:66px;padding:8px">'+n+'</button>').join('');
+ function finishFail(msg){state.active=false;clearInterval(state.primeTick);$('feedback').textContent=msg;$('primeGrid').querySelectorAll('button').forEach(b=>b.disabled=true)}
+ function update(){ $('primeCount').textContent='Find 10 prime numbers · Found '+state.found.size+' / 8 · Errors '+state.errors+' / 3'; }
+ $('primeGrid').querySelectorAll('[data-prime]').forEach(b=>b.onclick=()=>{
+  if(!state.active||b.disabled)return;countAttempt();let n=state.tiles[+b.dataset.prime];
+  if(isPrime(n)){state.found.add(n);b.disabled=true;b.style.background='#b7ff5b';b.style.color='#06121d';b.textContent='✓ '+n;$('feedback').textContent='Correct — '+n+' is prime.';update();if(state.found.size===10){state.active=false;clearInterval(state.primeTick);solved('All 10 prime numbers found with '+state.errors+' errors.');$('primeGrid').querySelectorAll('button').forEach(x=>x.disabled=true)}}
+  else{state.errors++;b.disabled=true;b.style.opacity='.35';$('feedback').textContent=n+' is composite. Error '+state.errors+' / 3.';update();if(state.errors>=3)finishFail('Three incorrect picks — Prime Pursuit failed. Return to games and try again.')}
+ });
+ state.primeTick=setInterval(()=>{if(!state.active)return;let left=Math.max(0,state.deadline-Date.now());$('primeTimer').textContent=(left/1000).toFixed(1)+'s';if(left<=0){finishFail('Time is up! Prime Pursuit failed.')}},50);
+}
+
+
+function minisudoku(){
+ setup('Sudoku: Lockdown','Expert 6×6 Sudoku with 22 empty cells. Fill every row, column and 2×3 box with digits 1–6 exactly once. No countdown—solve through deduction.','DEDUCTION · EXPERT');
+ // Build a valid 6×6 Sudoku and remove cells only when the puzzle remains uniquely solvable.
+ const pattern=(r,c)=>(r*3+Math.floor(r/2)+c)%6;
+ const bands=shuffle([0,1,2]), rows=[];bands.forEach(b=>shuffle([0,1]).forEach(r=>rows.push(b*2+r)));
+ const stacks=shuffle([0,1]), cols=[];stacks.forEach(b=>shuffle([0,1,2]).forEach(c=>cols.push(b*3+c)));
+ const digits=shuffle([1,2,3,4,5,6]);
+ const base=rows.map(r=>cols.map(c=>digits[pattern(r,c)]));
+ function sudokuSolutionCount(puzzle, limit=2){
+  const g=puzzle.map(r=>r.slice()); let count=0;
+  function candidates(r,c){let used=new Set(g[r].concat(g.map(row=>row[c])));let br=Math.floor(r/2)*2,bc=Math.floor(c/3)*3;for(let rr=br;rr<br+2;rr++)for(let cc=bc;cc<bc+3;cc++)used.add(g[rr][cc]);return [1,2,3,4,5,6].filter(n=>!used.has(n));}
+  function dfs(){if(count>=limit)return;let best=null,opts=null;for(let r=0;r<6;r++)for(let c=0;c<6;c++)if(!g[r][c]){let q=candidates(r,c);if(q.length===0)return;if(!opts||q.length<opts.length){best=[r,c];opts=q;if(q.length===1)break;}}if(!best){count++;return;}let [r,c]=best;for(let n of opts){g[r][c]=n;dfs();g[r][c]=0;if(count>=limit)return;}}
+  dfs();return count;
+ }
+ const puzzle=base.map(r=>r.slice());
+ for(const i of shuffle(Array.from({length:36},(_,i)=>i))){const r=i/6|0,c=i%6,old=puzzle[r][c];puzzle[r][c]=0;if(sudokuSolutionCount(puzzle)!==1)puzzle[r][c]=old;}
+ state.sudokuSolution=base.map(r=>r.slice());state.sudoku=puzzle.map(r=>r.slice());
+ state.sudokuEditable=Array.from({length:6},(_,r)=>Array.from({length:6},(_,c)=>puzzle[r][c]===0));
+ state.active=true;
+ $('board').innerHTML='<div class="card"><p class="subtle" id="sudokuCount">Fill the empty cells · No timer.</p><div id="sudokuGrid" class="grid" style="grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;max-width:390px;margin:14px auto"></div><div class="row" style="justify-content:center;margin-top:12px;gap:5px" id="sudokuPad"></div><p class="subtle">Select an empty cell, then enter a digit. Thick lines separate the 2×3 boxes. Use Check Grid when finished.</p><button class="btn primary" id="sudokuCheck">Check grid</button></div>';
+ state.sudokuSelected=-1;
+ $('sudokuPad').innerHTML=[1,2,3,4,5,6].map(n=>'<button class="btn" data-digit="'+n+'" style="min-width:38px;padding:8px">'+n+'</button>').join('');
+ function draw(){
+  $('sudokuGrid').innerHTML=state.sudoku.flatMap((row,r)=>row.map((n,c)=>{let i=r*6+c,boxBorder=(c===2?'border-right:3px solid #66809b;':'')+(r%2===1&&r!==5?'border-bottom:3px solid #66809b;':'');return '<button class="tile '+(n?'on':'')+'" data-cell="'+i+'" style="min-width:0;min-height:43px;padding:0;border-radius:3px;font-size:clamp(16px,3.5vw,23px);'+boxBorder+(i===state.sudokuSelected?'outline:3px solid #ffd447;':'')+'">'+(n||'·')+'</button>'})).join('');
+  $('sudokuGrid').querySelectorAll('[data-cell]').forEach(b=>b.onclick=()=>{let i=+b.dataset.cell;if(!state.sudokuEditable[i/6|0][i%6])return;state.sudokuSelected=i;draw()});
+  $('sudokuCount').textContent='Empty cells: '+state.sudoku.flat().filter(n=>!n).length+' · Unique solution · Select a cell and enter a digit.';
+ }
+ $('sudokuPad').querySelectorAll('[data-digit]').forEach(b=>b.onclick=()=>{if(!state.active||state.sudokuSelected<0)return;state.sudoku[state.sudokuSelected/6|0][state.sudokuSelected%6]=+b.dataset.digit;countAttempt();draw()});
+ $('sudokuCheck').onclick=()=>{if(!state.active)return;let g=state.sudoku;if(g.flat().some(n=>!n)){$('feedback').textContent='Fill every cell before checking.';return}const good=a=>a.slice().sort((x,y)=>x-y).join('')==='123456';let rows=g.every(good),cols=Array.from({length:6},(_,c)=>good(g.map(r=>r[c]))).every(Boolean),boxes=[0,2,4].every(r=>[0,3].every(c=>good([g[r][c],g[r][c+1],g[r][c+2],g[r+1][c],g[r+1][c+1],g[r+1][c+2]])));if(rows&&cols&&boxes){state.active=false;solved('Valid 6×6 Sudoku completed without a countdown.');}else $('feedback').textContent='Not valid yet: check every row, column and 2×3 box.'};
  draw();
 }
-function lights(box){
- let L,mv=0;
- const tog=(a,i)=>{const r=i/3|0,c=i%3;[[0,0],[1,0],[-1,0],[0,1],[0,-1]].forEach(([x,y])=>{const R=r+x,C=c+y;if(R>=0&&R<3&&C>=0&&C<3)a[R*3+C]^=1})};
- do{L=Array(9).fill(0);for(let i=0;i<9;i++)if(Math.random()<.5)tog(L,i)}while(!L.some(x=>x));
- const draw=()=>{box.innerHTML='<div class="grid" style="grid-template-columns:repeat(3,1fr)">'+L.map((v,i)=>'<button class="cell'+(v?' on':'')+'" data-i="'+i+'" aria-label="light '+(i+1)+(v?' on':' off')+'"></button>').join('')+'</div><p>Taps: '+mv+'</p>';
-  box.querySelectorAll('.cell').forEach(c=>c.onclick=()=>{tog(L,+c.dataset.i);mv++;if(L.some(x=>x))draw();else win(mv+' taps')})};
- draw();
+function equationforge(){
+ setup('Equation Forge','Choose the missing operator that makes each equation true. Complete 15 harder rounds using larger numbers and exact-division traps. You have only 2.8 seconds per question; three wrong answers or timeouts end the run.','MENTAL AGILITY · EXTREME');
+ state.round=0;state.errors=0;state.active=false;
+ $('board').innerHTML='<div class="card"><div class="sequence" id="eqQ">Ready?</div><p class="subtle" id="eqCount">Round 0 / 15 · Errors 0 / 3</p><div class="sequence" id="eqTimer" style="font-size:20px;margin:10px 0">5.0s</div><div class="games" id="eqOptions" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div></div>';
+ const ops=[{s:'+',f:(a,b)=>a+b},{s:'−',f:(a,b)=>a-b},{s:'×',f:(a,b)=>a*b},{s:'÷',f:(a,b)=>b!==0&&a%b===0?a/b:NaN}];
+ function next(){if(state.round>=15){clearInterval(state.equationClock);solved('15 hard equations solved · '+state.errors+' errors.');return}state.round++;let a,b,op,res;do{op=rand(4);if(op===3){b=rand(88)+12;let q=rand(88)+12;a=b*q;}else{a=rand(88)+12;b=rand(88)+12;}res=ops[op].f(a,b)}while(!Number.isInteger(res)||!Number.isFinite(res)||Math.abs(res)>10000||(op===2&&a*b<500)||ops.filter(x=>x.f(a,b)===res).length!==1);state.eqCorrect=op;state.eqA=a;state.eqB=b;$('eqQ').textContent=a+'  ?  '+b+'  =  '+res;$('eqCount').textContent='Question '+state.round+' / 15 · Errors '+state.errors+' / 3';$('eqOptions').innerHTML=shuffle([0,1,2,3]).map(i=>'<button class="btn" data-op="'+i+'" style="font-size:23px;min-height:58px">'+ops[i].s+'</button>').join('');state.active=true;state.eqDeadline=Date.now()+2800;$('eqTimer').textContent='2.8s';clearInterval(state.equationClock);clearTimeout(state.equationTimeout);state.equationClock=setInterval(()=>{if(!state.active)return;let left=Math.max(0,state.eqDeadline-Date.now());$('eqTimer').textContent=(left/1000).toFixed(1)+'s';if(left<=0)answer(-1)},25);state.equationTimeout=setTimeout(()=>answer(-1),2800);$('eqOptions').querySelectorAll('[data-op]').forEach(btn=>btn.onclick=()=>answer(+btn.dataset.op))}
+ function answer(v){if(!state.active)return;state.active=false;clearTimeout(state.equationTimeout);clearInterval(state.equationClock);countAttempt();if(v!==state.eqCorrect)state.errors++;if(state.errors>=3){$('feedback').textContent='Three errors or timeouts — Equation Forge ended.';$('eqOptions').querySelectorAll('button').forEach(b=>b.disabled=true);return}$('feedback').textContent=v===state.eqCorrect?'Correct operator!':'Incorrect or too slow.';setTimeout(next,300)}next();
 }
-function code(box){
- let sec=shuf([...'0123456789']).slice(0,4).join(''),h=[];
- const draw=(m)=>{box.innerHTML='<input id="gi" inputmode="numeric" maxlength="4" placeholder="4 different digits"><button class="btn pri" id="go">Guess ('+(10-h.length)+' left)</button><div class="st">'+(m||'')+'</div><ul class="hist">'+h.map(x=>'<li>'+x[0]+' &nbsp; '+x[1]+' in place, '+x[2]+' in wrong place</li>').join('')+'</ul>';
-  document.getElementById('go').onclick=()=>{const g=document.getElementById('gi').value.trim();
-   if(!/^\d{4}$/.test(g)||new Set(g).size<4){draw('Enter 4 different digits.');return}
-   let bu=0,co=0;for(let i=0;i<4;i++){if(g[i]===sec[i])bu++;else if(sec.includes(g[i]))co++}
-   h.unshift([g,bu,co]);
-   if(bu===4){win((h.length)+' guesses');return}
-   if(h.length>=10){sec=shuf([...'0123456789']).slice(0,4).join('');h=[];draw('Out of guesses. A new code was set.');return}
-   draw()}};
- draw();
+
+function constraintgrid(){
+ setup('Constraint Grid: 5×5','Fill every empty cell with 1–5. Each number must appear exactly once in every row and column. Six expert grids; every generated puzzle is checked for exactly one solution.','DEDUCTION · EXTREME');state.round=0;state.errors=0;state.active=true;
+ $('board').innerHTML='<div class="card"><div class="row" style="justify-content:space-between"><b id="cgRound">Grid 1 / 6</b><span class="tag">EXPERT</span></div><div id="cgGrid" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;padding:8px;margin-top:12px;max-width:390px;margin-left:auto;margin-right:auto"></div><p class="subtle" id="cgInfo"></p><div class="btnbar"><button class="btn primary" id="cgSubmit">Check grid</button><button class="btn" id="cgClear">Clear entries</button></div><p class="subtle" id="cgErrors">Failed submissions: 0 / 3</p></div>';
+ const gridEl=$('cgGrid'),N=5;
+ function countSolutions(puz,limit=2){let g=puz.map(r=>r.slice()),count=0;function dfs(){if(count>=limit)return;let br=-1,bc=-1,optsBest=null;for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!g[r][c]){let opts=[1,2,3,4,5].filter(v=>!g[r].includes(v)&&!g.some(row=>row[c]===v));if(opts.length===0)return;if(!optsBest||opts.length<optsBest.length){br=r;bc=c;optsBest=opts}}if(br<0){count++;return}for(const v of optsBest){g[br][bc]=v;dfs();g[br][bc]=0;if(count>=limit)return}}dfs();return count}
+ function makeSolution(){let nums=shuffle([1,2,3,4,5]),rows=shuffle([0,1,2,3,4]),cols=shuffle([0,1,2,3,4]);return rows.map(r=>cols.map(c=>nums[(r+c)%N]))}
+ function newPuzzle(){let sol,puz,tries=0;do{sol=makeSolution();puz=sol.map(r=>r.slice());let cells=shuffle(Array.from({length:25},(_,i)=>i));for(let i=0;i<5;i++)puz[Math.floor(cells[i]/N)][cells[i]%N]=0;tries++;}while(countSolutions(puz)!==1&&tries<500);if(countSolutions(puz)!==1){puz=sol.map(r=>r.slice());}state.solution=sol;state.puzzle=puz;state.entry=puz.map(r=>r.slice());state.given=puz.map(r=>r.map(v=>v!==0));render()}
+ function render(){$('cgRound').textContent='Grid '+(state.round+1)+' / 6';$('cgInfo').textContent='Clues: '+state.given.flat().filter(Boolean).length+' · Empty: '+state.given.flat().filter(v=>!v).length+' · Rows and columns each contain 1–5 once.';gridEl.innerHTML=state.entry.flatMap((row,r)=>row.map((v,c)=>{let idx=r*N+c,locked=state.given[r][c];return '<button class="tile '+(locked?'on':'')+'" data-cell="'+idx+'" '+(locked?'disabled':'')+' style="aspect-ratio:1;min-width:0;min-height:44px;padding:0;'+(locked?'background:#203a52;color:#b7ff5b;':'')+'">'+(v||'·')+'</button>'})).join('');gridEl.querySelectorAll('[data-cell]').forEach(b=>b.onclick=()=>{if(!state.active)return;let i=+b.dataset.cell,r=Math.floor(i/N),c=i%N;state.entry[r][c]=state.entry[r][c]===5?0:state.entry[r][c]+1;render()});$('cgErrors').textContent='Failed submissions: '+state.errors+' / 3'}
+ function valid(){for(let r=0;r<N;r++)if(new Set(state.entry[r]).size!==N||state.entry[r].some(v=>v<1||v>N))return false;for(let c=0;c<N;c++){let col=state.entry.map(row=>row[c]);if(new Set(col).size!==N||col.some(v=>v<1||v>N))return false}return state.entry.every((row,r)=>row.every((v,c)=>v===state.solution[r][c]))}
+ function next(){state.round++;if(state.round>=6){solved('Six uniquely solvable grids completed.');return}newPuzzle()}
+ $('cgSubmit').onclick=()=>{if(!state.active)return;countAttempt();if(valid()){state.active=false;$('feedback').textContent='Grid accepted.';setTimeout(()=>{state.active=true;next()},350)}else{state.errors++;$('cgErrors').textContent='Failed submissions: '+state.errors+' / 3';$('feedback').textContent='Not yet. Check every row and column.';if(state.errors>=3){state.active=false;$('cgSubmit').disabled=true;$('cgClear').disabled=true;gridEl.querySelectorAll('button').forEach(b=>b.disabled=true);$('feedback').textContent='Three failed submissions — game over.'}}};$('cgClear').onclick=()=>{if(!state.active)return;state.entry=state.entry.map((row,r)=>row.map((v,c)=>state.given[r][c]?v:0));render()};newPuzzle();
 }
-function memory(box){
- const S=['▲','●','■','◆','★','✚','♥','♣'],c=shuf([...S,...S]);let open=[],ok=new Set(),lock=0,mv=0;
- const draw=()=>{box.innerHTML='<div class="grid" style="grid-template-columns:repeat(4,1fr)">'+c.map((v,i)=>'<button class="cell'+(ok.has(i)?' on':'')+'" data-i="'+i+'">'+((open.includes(i)||ok.has(i))?v:'?')+'</button>').join('')+'</div><p>Tries: '+mv+'</p>';
-  box.querySelectorAll('.cell').forEach(e=>e.onclick=()=>{const i=+e.dataset.i;if(lock||open.includes(i)||ok.has(i))return;open.push(i);
-   if(open.length===2){mv++;const[a,b]=open;if(c[a]===c[b]){ok.add(a);ok.add(b);open=[];if(ok.size===16){draw();setTimeout(()=>win(mv+' tries'),500);return}}else{lock=1;draw();setTimeout(()=>{open=[];lock=0;draw()},700);return}}
-   draw()})};
- draw();
+
+
+function hallshift(){
+ setup('Slide to the Hall','Touch and drag blocks directly along their permitted axis. Move every vertical blocker out of the ball’s row, then send the ball to the hall. Clear all 8 increasingly constrained boards within the move limit.','SPATIAL PLANNING · EXTREME');
+ state.level=0;state.moves=0;state.errors=0;state.active=true;
+ $('board').innerHTML='<div class="card"><div class="row" style="justify-content:space-between"><b id="hsLevel">Board 1 / 8</b><span class="tag" id="hsMoves">Moves 0 / 5</span></div><p class="subtle">Drag a block up/down or left/right along its axis. The ball starts on row 3; blockers crossing that row must be shifted away. One grid-square per move.</p><div id="hsBoard" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;max-width:440px;margin:14px auto;touch-action:pan-y"></div><div class="row" style="justify-content:center"><span class="tag">TOUCH + DRAG TO SLIDE</span><span class="tag">8 BOARDS</span></div><p class="subtle" id="hsInfo">Drag any block in its direction of travel.</p></div>';
+ const layouts=[
+ {ball:2,limit:5,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:2},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:3,c:0,o:'h',len:3},{id:'E',r:4,c:4,o:'v',len:2}]},
+ {ball:2,limit:5,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:3},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:3,c:1,o:'h',len:3},{id:'E',r:4,c:4,o:'v',len:2},{id:'F',r:5,c:0,o:'h',len:2}]},
+ {ball:2,limit:5,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:2},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:1,c:4,o:'v',len:2},{id:'E',r:3,c:0,o:'h',len:3},{id:'F',r:4,c:2,o:'h',len:2},{id:'G',r:5,c:4,o:'h',len:2}]},
+ {ball:2,limit:5,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:3},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:1,c:4,o:'v',len:2},{id:'E',r:3,c:0,o:'h',len:2},{id:'F',r:4,c:2,o:'h',len:3},{id:'G',r:5,c:0,o:'h',len:2}]},
+ {ball:2,limit:4,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:2},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:1,c:4,o:'v',len:2},{id:'E',r:3,c:0,o:'h',len:3},{id:'F',r:4,c:2,o:'h',len:2},{id:'G',r:5,c:4,o:'h',len:2}]},
+ {ball:2,limit:4,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:3},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:1,c:4,o:'v',len:2},{id:'E',r:3,c:0,o:'h',len:3},{id:'F',r:4,c:2,o:'h',len:2},{id:'G',r:5,c:0,o:'h',len:3}]},
+ {ball:2,limit:4,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:2},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:1,c:4,o:'v',len:2},{id:'E',r:3,c:0,o:'h',len:2},{id:'F',r:4,c:2,o:'h',len:3},{id:'G',r:5,c:0,o:'h',len:2},{id:'H',r:4,c:5,o:'v',len:2}]},
+ {ball:2,limit:4,blocks:[{id:'A',r:1,c:1,o:'v',len:2},{id:'B',r:0,c:2,o:'h',len:3},{id:'C',r:2,c:3,o:'v',len:2},{id:'D',r:1,c:4,o:'v',len:2},{id:'E',r:3,c:0,o:'h',len:3},{id:'F',r:4,c:2,o:'h',len:2},{id:'G',r:5,c:0,o:'h',len:3},{id:'H',r:4,c:5,o:'v',len:2}]}
+ ];
+ function cells(b){return Array.from({length:b.len},(_,i)=>[b.r+(b.o==='v'?i:0),b.c+(b.o==='h'?i:0)])}
+ function occupied(except){let s=new Set();state.blocks.filter(b=>b.id!==except).forEach(b=>cells(b).forEach(([r,c])=>s.add(r*6+c)));return s}
+ function draw(){let el=$('hsBoard'),occ={};state.blocks.forEach(b=>cells(b).forEach(([r,c],i)=>occ[r*6+c]={b,first:i===0}));el.innerHTML='';for(let r=0;r<6;r++)for(let c=0;c<6;c++){let idx=r*6+c,cell=document.createElement('button');cell.className='tile';cell.style.cssText='min-width:0;min-height:39px;padding:0;border-radius:6px;font-size:12px;touch-action:none;user-select:none;'+(r===state.ball?'background:#102c3d;border-color:#39d9f2;':'');if(c===5&&r===state.ball){cell.textContent='HALL';cell.style.fontSize='10px';cell.style.border='2px dashed #ffc857';cell.title='Goal hall'}else if(r===state.ball&&c===0){cell.textContent='●';cell.style.background='#39d9f2';cell.style.color='#07111f';cell.title='Ball'}else if(occ[idx]){let b=occ[idx].b;cell.textContent=occ[idx].first?b.id:'';cell.style.background=b.o==='h'?'#355d80':'#4a486f';cell.style.border='2px solid #7998bb';cell.title='Block '+b.id+' — '+(b.o==='h'?'horizontal':'vertical');cell.style.cursor=b.o==='h'?'ew-resize':'ns-resize';cell.onpointerdown=e=>{if(!state.active)return;state.dragStart={x:e.clientX,y:e.clientY,id:b.id};cell.setPointerCapture?.(e.pointerId)};cell.onpointerup=e=>{if(!state.dragStart||state.dragStart.id!==b.id)return;let dx=e.clientX-state.dragStart.x,dy=e.clientY-state.dragStart.y;state.dragStart=null;let dist=b.o==='h'?dx:dy,dir=dist<0?(b.o==='h'?'left':'up'):(b.o==='h'?'right':'down');let steps=Math.min(5,Math.floor(Math.abs(dist)/20));if(steps===0)return;state.selected=b.id;for(let k=0;k<steps&&state.active;k++)move(dir)};}else{cell.textContent='·';cell.style.opacity='.35'}el.appendChild(cell)}$('hsLevel').textContent='Board '+(state.level+1)+' / 8';$('hsMoves').textContent='Moves '+state.moves+' / '+layouts[state.level].limit;$('hsInfo').textContent='Clear row 3. '+state.blocks.length+' blocks on this board.'}
+ function move(dir){if(!state.active||!state.selected)return;let b=state.blocks.find(x=>x.id===state.selected);if(!b||((b.o==='h'&&(dir==='up'||dir==='down'))||(b.o==='v'&&(dir==='left'||dir==='right'))))return;let dr=dir==='up'?-1:dir==='down'?1:0,dc=dir==='left'?-1:dir==='right'?1:0,old=cells(b),lead=(dir==='up'||dir==='left')?old[0]:old[old.length-1],nr=lead[0]+dr,nc=lead[1]+dc;if(nr<0||nr>5||nc<0||nc>5||occupied(b.id).has(nr*6+nc)){return}b.r+=dr;b.c+=dc;state.moves++;countAttempt();let limit=layouts[state.level].limit;if(state.moves>limit){state.active=false;$('feedback').textContent='Move limit exceeded. Retry this game to try a fresh run.';draw();return}let occ=occupied(''),clear=true;for(let c=1;c<6;c++)if(occ.has(state.ball*6+c))clear=false;if(clear){state.active=false;$('feedback').textContent='Route clear!';setTimeout(()=>{state.level++;if(state.level===8){solved('All eight slide-block boards cleared.');return}state.moves=0;state.selected=null;state.blocks=layouts[state.level].blocks.map(x=>({...x}));state.ball=layouts[state.level].ball;state.active=true;draw();$('feedback').textContent='Next board: fewer moves, more blockers.'},350)}else draw()}
+ state.level=0;state.moves=0;state.selected=null;state.blocks=layouts[0].blocks.map(x=>({...x}));state.ball=layouts[0].ball;draw();
 }
-function echo(box){
- const col=['var(--c1)','var(--c2)','var(--c3)','var(--c4)'];let seq=[],pos=0,busy=1,tm=[];
- box.innerHTML='<div class="grid" style="grid-template-columns:1fr 1fr">'+col.map((c,i)=>'<button class="pad" data-i="'+i+'" style="background:'+c+';color:'+c+'" aria-label="pad '+(i+1)+'"></button>').join('')+'</div><div class="st" id="es">Watch the pattern.</div>';
- const pads=[...box.querySelectorAll('.pad')],es=document.getElementById('es');
- const flash=i=>{pads[i].classList.add('f');setTimeout(()=>pads[i].classList.remove('f'),350)};
- const play=()=>{busy=1;pos=0;es.textContent='Step '+seq.length+' of 7. Watch.';seq.forEach((s,k)=>setTimeout(()=>flash(s),700+k*650));setTimeout(()=>{busy=0;es.textContent='Your turn.'},700+seq.length*650)};
- const next=()=>{seq.push(rnd(4));play()};
- pads.forEach((p,i)=>p.onclick=()=>{if(busy)return;flash(i);
-  if(i!==seq[pos]){busy=1;es.textContent='Wrong. Starting again.';seq=[];setTimeout(next,1100);return}
-  pos++;if(pos===seq.length){if(seq.length===7){busy=1;setTimeout(()=>win('7 steps'),400)}else{busy=1;es.textContent='Good.';setTimeout(next,800)}}});
- setTimeout(next,600);
+
+function lasercircuit(){
+ setup('Laser Relay','Rotate each mirror to route the laser from the emitter through both checkpoints and into the receiver. Five circuits; three failed submissions end the run.','SPATIAL OPTICS · EXTREME');state.round=0;state.errors=0;state.active=true;
+ $('board').innerHTML='<div class="card"><div class="row" style="justify-content:space-between"><b id="lrRound">Circuit 1 / 5</b><span class="tag" id="lrErrors">Errors 0 / 3</span></div><p class="subtle">Tap a mirror to rotate it 90°. The beam travels straight, reflects at / and \\ mirrors, and must touch both checkpoints in order before reaching the receiver.</p><div id="lrGrid" class="grid" style="grid-template-columns:repeat(5,minmax(0,1fr));max-width:360px"></div><div class="row"><button class="btn primary" id="lrCheck">Test beam</button><button class="btn" id="lrReset">Reset mirrors</button></div><p class="subtle" id="lrStatus">Emitter → checkpoint 1 → checkpoint 2 → receiver.</p></div>';
+ const puzzles=[{start:[2,0,'R'],end:[2,4],cp:[[0,2],[4,2]],m:[[2,1,'/'],[0,1,'\\'],[0,2,'/'],[4,2,'\\'],[4,3,'/']]},{start:[4,0,'R'],end:[0,4],cp:[[4,3],[1,4]],m:[[4,1,'/'],[2,1,'\\'],[2,3,'/'],[1,3,'\\'],[1,4,'/'],[0,2,'\\']]},{start:[0,0,'D'],end:[4,4],cp:[[2,0],[4,2]],m:[[1,0,'\\'],[2,1,'/'],[2,3,'\\'],[3,3,'/'],[4,3,'\\']]},{start:[4,0,'R'],end:[0,4],cp:[[4,2],[1,2]],m:[[4,1,'/'],[3,2,'\\'],[1,3,'/'],[1,2,'\\'],[0,3,'/'],[2,4,'\\']]},{start:[0,0,'D'],end:[4,4],cp:[[2,0],[2,4]],m:[[1,0,'\\'],[2,1,'/'],[0,2,'\\'],[2,3,'/'],[3,4,'\\'],[4,2,'/'],[1,4,'/']]}];
+ function build(){state.p=puzzles[state.round];state.mirrors=state.p.m.map(([r,c,o])=>({r,c,o,initial:o}));$('lrRound').textContent='Circuit '+(state.round+1)+' / 5';$('lrErrors').textContent='Errors '+state.errors+' / 3';$('lrStatus').textContent='Rotate mirrors, then test the beam.';draw()}
+ function draw(){let p=state.p,grid=$('lrGrid');grid.innerHTML='';for(let r=0;r<5;r++)for(let c=0;c<5;c++){let b=document.createElement('button');b.className='tile';b.style.minHeight='54px';b.style.fontSize='25px';let cp=p.cp.findIndex(x=>x[0]===r&&x[1]===c),mi=state.mirrors.find(x=>x.r===r&&x.c===c);if(r===p.start[0]&&c===p.start[1]){b.textContent='⚡';b.title='Emitter'}else if(r===p.end[0]&&c===p.end[1]){b.textContent='◎';b.title='Receiver'}else if(cp>=0){b.textContent=cp===0?'①':'②';b.style.color='#b7ff5b';b.title='Checkpoint '+(cp+1)}else if(mi){b.textContent=mi.o;b.style.background='#355d80';b.title='Tap to rotate mirror';b.onclick=()=>{if(!state.active)return;mi.o=mi.o==='/'?'\\':'/';draw()}}else{b.textContent='·';b.style.opacity='.25'}grid.appendChild(b)}}
+ function trace(){let p=state.p,[r,c,d]=p.start,seen=new Set(),hit=[],dirs={R:[0,1],L:[0,-1],U:[-1,0],D:[1,0]},reflect=(d,o)=>o==='/'?({R:'U',U:'R',L:'D',D:'L'})[d]:({R:'D',D:'R',L:'U',U:'L'})[d];for(let n=0;n<60;n++){let key=r+','+c+','+d;if(seen.has(key))return {ok:false,hit};seen.add(key);if(r===p.end[0]&&c===p.end[1])return {ok:hit.length===2,hit,receiver:true};let cp=p.cp.findIndex(x=>x[0]===r&&x[1]===c);if(cp>=0&&!hit.includes(cp))hit.push(cp);let m=state.mirrors.find(x=>x.r===r&&x.c===c);if(m)d=reflect(d,m.o);let v=dirs[d];r+=v[0];c+=v[1];if(r<0||r>=5||c<0||c>=5)return {ok:false,hit}}return {ok:false,hit}}
+ $('lrCheck').onclick=()=>{if(!state.active)return;countAttempt();let t=trace();if(t.ok){state.round++;if(state.round>=5){state.active=false;solved('Five laser circuits completed.');return}build();$('feedback').textContent='Circuit connected. Next layout.'}else{state.errors++;$('lrErrors').textContent='Errors '+state.errors+' / 3';$('feedback').textContent='Beam missed the required route. Checkpoint order reached: '+t.hit.map(x=>x+1).join(', ');if(state.errors>=3){state.active=false;$('lrCheck').disabled=true;$('lrGrid').querySelectorAll('button').forEach(b=>b.disabled=true);$('feedback').textContent='Three failed tests. Relay offline; retry the game.'}}};$('lrReset').onclick=()=>{if(!state.active)return;state.mirrors.forEach(m=>m.o=m.initial);draw()};build();
 }
-home();
-const h=(location.hash||'').slice(1);
-if(G[h]&&team){begin(h)}else if(G[h]){const b=app.querySelector('[data-g="'+h+'"]');if(b)b.style.outlineOffset='3px',b.style.outline='3px solid var(--c3)'}
-</script>
-</body>
-</html>
+
+function dualityprotocol(){
+ setup('Duality Protocol','A stream of symbols follows one of two rules. BLUE mode: tap symbols with an even number. AMBER mode: tap symbols that are prime. The mode flips unpredictably after some signals. Complete 20 signals; three errors end the run.','WORKING MEMORY · EXTREME');state.round=0;state.errors=0;state.active=false;state.mode=0;
+ $('board').innerHTML='<div class="card"><div id="dpModeCard" style="padding:16px;border:3px solid #39d9f2;border-radius:14px;background:#0b2638;text-align:center;margin-bottom:14px;box-shadow:0 0 22px #39d9f244"><div class="subtle" style="letter-spacing:.18em">ACTIVE RULE</div><div class="tag" id="dpMode" style="display:inline-block;font-size:16px;padding:8px 18px;margin-top:8px;background:#39d9f222;color:#39d9f2;border:2px solid #39d9f2">BLUE MODE · EVEN</div><div id="dpRule" style="font-size:18px;font-weight:900;margin-top:8px">TAP EVEN NUMBERS</div></div><div class="row" style="justify-content:space-between"><b id="dpRound">Signal 1 / 20</b><span class="tag">3 errors = fail</span></div><div class="sequence" id="dpNum" style="font-size:54px">—</div><div class="games" id="dpOpts" style="grid-template-columns:repeat(2,minmax(0,1fr))"><button class="btn" id="dpYes">MATCH — TAP</button><button class="btn" id="dpNo">NO MATCH — TAP</button></div><p class="subtle" id="dpStatus">Even number = match in BLUE. Prime number = match in AMBER.</p></div>';
+ const prime=n=>n>1&&Array.from({length:n-2},(_,i)=>i+2).every(d=>n%d!==0);
+ function next(){if(state.round>=20){solved('20 signals processed with '+state.errors+' errors.');return}state.round++;if(state.round===1)state.mode=0;else if(Math.random()<.42)state.mode=1-state.mode;state.n=rand(28)+2;state.match=state.mode===0?state.n%2===0:prime(state.n);$('dpRound').textContent='Signal '+state.round+' / 20 · Errors '+state.errors+' / 3';$('dpMode').textContent=state.mode===0?'BLUE MODE · EVEN':'AMBER MODE · PRIME';$('dpMode').style.color=state.mode===0?'#39d9f2':'#ffc857';$('dpMode').style.background=state.mode===0?'#39d9f222':'#ffc85722';$('dpMode').style.borderColor=state.mode===0?'#39d9f2':'#ffc857';$('dpModeCard').style.borderColor=state.mode===0?'#39d9f2':'#ffc857';$('dpModeCard').style.background=state.mode===0?'#0b2638':'#30240d';$('dpModeCard').style.boxShadow=state.mode===0?'0 0 22px #39d9f244':'0 0 22px #ffc85744';$('dpRule').textContent=state.mode===0?'TAP EVEN NUMBERS':'TAP PRIME NUMBERS';$('dpNum').textContent=state.n;state.active=true;clearTimeout(state.timeout);state.timeout=setTimeout(()=>answer(null),1900)}
+ function answer(v){if(!state.active)return;state.active=false;clearTimeout(state.timeout);countAttempt();if(v===null||v!==state.match)state.errors++;$('feedback').textContent=v===null?'Too slow. Error added.':v===state.match?'Correct response.':'Wrong response — re-evaluate the active rule.';if(state.errors>=3){$('dpYes').disabled=true;$('dpNo').disabled=true;$('feedback').textContent='Three errors/timeouts. Protocol failed.';return}setTimeout(next,250)}$('dpYes').onclick=()=>answer(true);$('dpNo').onclick=()=>answer(false);next();
+}
+
+
+function blockcount(){
+ setup('Block Count: 3D','Count every cube in the stack diagram. Each column is a literal vertical stack; hidden lower cubes still count. Hard from the first round.','SPATIAL REASONING · EXTREME');
+ state.round=0;state.errors=0;state.active=true;
+ // The answer is computed from the same stack heights used to draw the board.
+ const levels=[
+  {heights:[4,2,5,3,4,2,3,5,1,4,3,2],answer:38},
+  {heights:[5,3,4,6,2,5,4,3,6,2,4,5,3,4],answer:56},
+  {heights:[6,4,5,3,6,2,5,4,7,3,5,6,2,4,5,3],answer:70},
+  {heights:[7,5,6,4,7,3,6,5,8,4,6,7,3,5,6,4,7,2],answer:95},
+  {heights:[8,6,7,5,8,4,7,6,9,5,7,8,4,6,7,5,8,3,6,7],answer:126}
+ ];
+ levels.forEach(l=>l.answer=l.heights.reduce((a,b)=>a+b,0));
+ function drawLevel(){const lv=levels[state.round];const opts=[lv.answer-7,lv.answer-3,lv.answer,lv.answer+5].filter((v,i,a)=>v>0&&a.indexOf(v)===i);while(opts.length<4)opts.push(lv.answer+opts.length+8);shuffle(opts);
+ $('board').innerHTML='<div class="card"><div class="row" style="justify-content:space-between"><span class="tag">ROUND '+(state.round+1)+' / 5</span><span class="tag">ERRORS '+state.errors+' / 3</span></div><h2 style="text-align:center">What is the total number of cubes?</h2><canvas id="bcCanvas" style="display:block;width:100%;max-width:650px;height:auto;aspect-ratio:1.55;margin:auto" width="780" height="500"></canvas><p class="subtle" style="text-align:center">Every visible stack is vertical. Count all cubes in each stack, including the cubes underneath the top cube.</p><div id="bcChoices" class="choices" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:420px;margin:12px auto"></div></div>';
+ const c=$('bcCanvas'),ctx=c.getContext('2d');ctx.fillStyle='#fffbdc';ctx.fillRect(0,0,780,500);ctx.fillStyle='#f6a35e';ctx.beginPath();ctx.moveTo(40,55);ctx.lineTo(740,55);ctx.lineTo(780,460);ctx.lineTo(0,460);ctx.closePath();ctx.fill();
+ const cols=5,rows=Math.ceil(lv.heights.length/cols),cw=46,ch=24,dep=22,baseX=390,baseY=385;function poly(points,color){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='rgba(70,50,25,.45)';ctx.lineWidth=1;ctx.stroke()}
+ // A grid of separated stacks makes every stack height readable; the total is the exact sum above.
+ lv.heights.forEach((h,i)=>{const row=Math.floor(i/cols),col=i%cols;const x=115+col*137+(row%2)*8,y=175+row*105;for(let z=0;z<h;z++){const yy=y-z*ch;poly([[x,yy],[x+cw/2,yy+dep/2],[x,yy+dep],[x-cw/2,yy+dep/2]],'#f5d12b');poly([[x-cw/2,yy+dep/2],[x,yy+dep],[x,yy+dep+ch],[x-cw/2,yy+dep/2+ch]],'#2d69ad');poly([[x+cw/2,yy+dep/2],[x,yy+dep],[x,yy+dep+ch],[x+cw/2,yy+dep/2+ch]],'#d12c31')}poly([[x,y-h*ch],[x+cw/2,y-h*ch+dep/2],[x,y-h*ch+dep],[x-cw/2,y-h*ch+dep/2]],'#ffeb63');ctx.fillStyle='#162b3d';ctx.font='bold 15px Arial';ctx.textAlign='center';ctx.fillText('Stack '+(i+1),x,y+dep+18)});
+ opts.forEach(v=>{const b=document.createElement('button');b.className='choice';b.textContent=v;b.onclick=()=>{if(!state.active)return;countAttempt();if(v===lv.answer){if(state.round===4){state.active=false;solved('All five cube-count structures solved accurately.');return}state.round++;drawLevel();$('feedback').textContent='Correct. The next structure is harder.'}else{state.errors++;$('feedback').textContent='Incorrect. Count each column height and add them carefully. Errors: '+state.errors+' / 3';if(state.errors>=3){state.active=false;$('feedback').textContent='Three incorrect answers. Use Retry this game.'}}};$('bcChoices').appendChild(b)})
+ }
+ drawLevel();
+}
+
+
+function balltrack(){
+ setup('Triple Ball Tracking','Memorize the THREE glowing balls for 3 seconds. Then all 16 balls move and swap for 15 seconds. Select the original three after movement stops.','VISUAL ATTENTION · EXTREME');state.round=0;state.errors=0;state.active=true;
+ const total=5,N=16;
+ function startRound(){clearTimeout(state.timeout);clearInterval(state.motion);state.round++;state.phase='memorize';state.errors=state.errors||0;state.marked=shuffle(Array.from({length:N},(_,i)=>i)).slice(0,3);state.positions=Array.from({length:N},(_,i)=>i);state.order=shuffle(Array.from({length:N},(_,i)=>i));state.selected=new Set();state.elapsed=0;draw();render();$('btStatus').textContent='MEMORIZE: the three glowing balls';state.timeout=setTimeout(beginMotion,3000)}
+ function beginMotion(){if(!state.active)return;state.phase='moving';$('btStatus').textContent='TRACK THEM! Movement ends in 15 seconds';render();state.motion=setInterval(()=>{if(!state.active||state.phase!=='moving')return;let a=rand(N),b=rand(N);while(a===b)b=rand(N);[state.positions[a],state.positions[b]]=[state.positions[b],state.positions[a]];state.elapsed+=180;render();if(state.elapsed>=15000){clearInterval(state.motion);state.phase='answer';$('btStatus').textContent='STOPPED — select the THREE balls you memorized';render()}},180)}
+ function draw(){$('board').innerHTML='<div class="card"><div class="row" style="justify-content:space-between"><b>Round '+state.round+' / '+total+'</b><span class="tag">Errors '+state.errors+' / 3</span></div><h3>Track the three marked balls</h3><p class="subtle" id="btStatus">Get ready…</p><div id="btBalls" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:620px;margin:18px auto;touch-action:manipulation"></div><p class="subtle">First memorize the glowing balls. During movement, follow their identities—not their starting positions. Select exactly three after 15 seconds.</p></div>';}
+ function render(){const box=$('btBalls');if(!box)return;box.innerHTML='';for(let slot=0;slot<N;slot++){const ball=state.positions[slot],b=document.createElement('button');b.className='tile';const glowing=state.phase==='memorize'&&state.marked.includes(ball);b.style.cssText='height:clamp(58px,13vw,86px);min-width:0;border-radius:50%;font-size:clamp(24px,5vw,36px);border:3px solid '+(glowing?'#ffe56b':'#66839b')+';background:'+(glowing?'radial-gradient(circle at 32% 25%,#fff6a8,#ffbb22 48%,#a85c00)':'radial-gradient(circle at 32% 25%,#9bd7ff,#28608a 52%,#102c43)')+';box-shadow:'+(glowing?'0 0 22px #ffcf33, inset 0 0 10px #fff':'inset 0 0 8px #071a2a');b.textContent=glowing?'●':(state.phase==='answer'&&state.selected.has(ball)?'✓':'●');if(state.phase==='answer'){b.style.borderColor=state.selected.has(ball)?'#7dffad':'#66839b';b.onclick=()=>{if(!state.active||state.phase!=='answer')return;if(state.selected.has(ball))return;state.selected.add(ball);b.style.background='#274d3c';b.style.borderColor='#7dffad';b.textContent='✓';if(state.selected.size===3){const ok=[...state.selected].every(x=>state.marked.includes(x))&&state.marked.every(x=>state.selected.has(x));if(ok){if(state.round===total){state.active=false;solved('All five rounds completed: all initially highlighted balls tracked correctly.');return}state.phase='between';$('feedback').textContent='Correct — all three original balls identified.';state.timeout=setTimeout(()=>{if(state.active)startRound()},700)}else{state.errors++;$('feedback').textContent='Incorrect selection. Errors: '+state.errors+' / 3';if(state.errors>=3){state.active=false;$('feedback').textContent='Tracking failed. Use Retry this game.';return}state.timeout=setTimeout(()=>{if(state.active){state.selected.clear();render()}},650)}}}}else{b.disabled=true}box.appendChild(b)}}
+ startRound();
+}
+
+$('homeBtn').onclick=()=>{clearInterval(timer);document.onkeydown=null;$('play').classList.add('hidden');$('home').classList.remove('hidden')};$('back').onclick=()=>{$('homeBtn').click()};$('retry').onclick=()=>{if(current)setGame(current)};document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>setGame(b.dataset.game));
+})();
+</script></body></html>
